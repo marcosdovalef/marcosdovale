@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marcos do Vale — Projetos</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --wine: #600818;
+    --wine-dark: #3d0510;
+    --wine-light: #8a0f22;
+    --cream: #d6d7ce;
+    --cream-dark: #bbbdb4;
+    --cream-light: #e8e9e2;
+    --ink: #1a1108;
+    --muted: #7a7870;
+  }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid var(--cream-dark);
+    background: var(--cream);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .logo {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--wine);
+    line-height: 1.3;
+  }
+  .logo span { display: block; font-weight: 700; font-size: 15px; color: var(--ink); letter-spacing: 0.04em; }
+
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav ul a {
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--wine); }
+
+  .hero {
+    background: var(--wine);
+    padding: 6rem 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border: 1px solid rgba(214,215,206,0.15);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40px;
+    width: 180px; height: 180px;
+    border: 1px solid rgba(214,215,206,0.1);
+    border-radius: 50%;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(214,215,206,0.55);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: rgba(214,215,206,0.4);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    color: var(--cream);
+    max-width: 700px;
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(214,215,206,0.6);
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(214,215,206,0.6);
+    letter-spacing: 0.04em;
+    max-width: 400px;
+    line-height: 1.7;
+  }
+
+  .hero-year {
+    position: absolute;
+    bottom: 2rem;
+    right: 3rem;
+    font-size: 80px;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: rgba(214,215,206,0.07);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem 3rem 2rem;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+
+  .section-title {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--wine);
+    display: inline-block;
+  }
+
+  .section-count {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+
+  .projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--cream-dark);
+  }
+
+  .project-card {
+    background: var(--cream);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .project-card:hover { background: var(--cream-light); }
+
+  .project-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85) contrast(1.05);
+    transition: transform 0.6s ease, filter 0.4s ease;
+  }
+  .project-card:hover .project-image img {
+    transform: scale(1.03);
+    filter: saturate(1) contrast(1.05);
+  }
+
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,17,8,0.6) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .project-card:hover .project-overlay { opacity: 1; }
+
+  .overlay-tag {
+    position: absolute;
+    bottom: 1rem;
+    left: 1.25rem;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .project-card:hover .overlay-tag {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project-info {
+    padding: 1.5rem 1.5rem 2rem;
+    border-top: 1px solid var(--cream-dark);
+  }
+
+  .project-number {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--wine);
+    margin-bottom: 0.5rem;
+  }
+
+  .project-name {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    line-height: 1.15;
+  }
+
+  .project-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .project-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--cream-dark);
+  }
+
+  .meta-item { font-size: 11px; }
+  .meta-label { color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+  .meta-value { color: var(--ink); font-weight: 500; }
+
+  .contact {
+    background: var(--wine);
+    padding: 4rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .contact-left .label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(214,215,206,0.45);
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-left h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--cream);
+    line-height: 1.1;
+  }
+
+  .contact-link {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border: 1px solid rgba(214,215,206,0.4);
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: background 0.25s, border-color 0.25s;
+    flex-shrink: 0;
+  }
+  .contact-link:hover {
+    background: rgba(214,215,206,0.12);
+    border-color: rgba(214,215,206,0.7);
+  }
+
+  footer {
+    background: var(--wine-dark);
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer p {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: rgba(214,215,206,0.35);
+    text-transform: uppercase;
+  }
+
+  .footer-dot {
+    width: 6px; height: 6px;
+    background: var(--wine);
+    border-radius: 50%;
+  }
+
+  @media (max-width: 680px) {
+    nav { padding: 1.25rem 1.5rem; }
+    nav ul { gap: 1.5rem; }
+    .hero { padding: 4rem 1.5rem 4rem; }
+    .section-header { padding: 2rem 1.5rem 1.5rem; }
+    .projects { grid-template-columns: 1fr; }
+    .project-info { padding: 1.25rem; }
+    .contact { padding: 3rem 1.5rem; }
+    footer { padding: 1.25rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    Arquitetura & Design
+    <span>Marcos do Vale</span>
+  </div>
+  <ul>
+    <li><a href="#">Projetos</a></li>
+    <li><a href="#">Sobre</a></li>
+    <li><a href="#">Contato</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-label">Portfólio</div>
+  <h1>Espaços que <em>contam</em> histórias</h1>
+  <p class="hero-sub">Design de interiores e marcenaria contemporânea. Projetos planejados com intenção, funcionalidade e beleza duradoura.</p>
+  <div class="hero-year">2025</div>
+</section>
+
+<div class="section-header">
+  <span class="section-title">Projetos selecionados</span>
+  <span class="section-count">02 trabalhos</span>
+</div>
+
+<div class="projects">
+
+  <div class="project-card">
+    <div class="project-image">
+      <img
+        src="https://lh3.googleusercontent.com/sitesv/AA5AbUDA4YenTQG2g_7L5tPyVefqnTlx8EMUe6lkoZk7N_jxD-l1VC_P2HEd0c423IzuRBAe6znTi-oEjBUxDdbw3V3O00k8C21uA_En1yvMu5Xln39fVMyNeH6Cla7sF9hSMc-wFHMFGVYvm3OKCJDLIKB7LSsjZJStZhtQwSrqg_D8bEW93OFPIS92CJ-3q08_eQrCGbkEtuJj_V0JmN2lmBHXUzFCdFn4rwmBnTI=w1280"
+        alt="Apartamento Parque Brás"
+      >
+      <div class="project-overlay"></div>
+      <div class="overlay-tag">Studio — 27 m²</div>
+    </div>
+    <div class="project-info">
+      <div class="project-number">Projeto 01</div>
+      <h3 class="project-name">Apartamento<br>Parque Brás</h3>
+      <p class="project-desc">Studio de 27 m² planejado para locações de longa temporada. Soluções minimalistas que maximizam o armazenamento sem abrir mão da circulação e da sensação de amplitude.</p>
+      <div class="project-meta">
+        <div class="meta-item">
+          <span class="meta-label">Área</span>
+          <span class="meta-value">27 m²</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Tipologia</span>
+          <span class="meta-value">Studio</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Uso</span>
+          <span class="meta-value">Locação</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-image">
+      <img
+        src="https://lh3.googleusercontent.com/sitesv/AA5AbUBd5-vkw8gRfr0SwWOeJPJmezpTsp6rumFZdk7y2a8531B6S-4ATogzxVTuikEsjtU1lxNJrCXCYyjljDFnBnS4K5WUvbzcuoD-FA7-Cjl3Qx0sOnzWXtrD7_ChAMGyl8te329vGaQYQUTJJ9VXJZXTU4AgCE1gL4tw8D-yAz7J2twAEFxfwvfC1KYnN1pt1HpZzSpheEjfR8jZMptZgZeo_5TTFGlUxJH2MBQ=w1280"
+        alt="Sala de Estar Hortênsias"
+      >
+      <div class="project-overlay"></div>
+      <div class="overlay-tag">Marcenaria contemporânea</div>
+    </div>
+    <div class="project-info">
+      <div class="project-number">Projeto 02</div>
+      <h3 class="project-name">Sala de Estar<br>Hortênsias</h3>
+      <p class="project-desc">Projeto de marcenaria com proposta contemporânea e sofisticada. Design pensado para maximizar o armazenamento de forma inteligente, unindo funcionalidade e um toque de aconchego.</p>
+      <div class="project-meta">
+        <div class="meta-item">
+          <span class="meta-label">Tipo</span>
+          <span class="meta-value">Marcenaria</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Estilo</span>
+          <span class="meta-value">Contemporâneo</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Foco</span>
+          <span class="meta-value">Sala de estar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="contact">
+  <div class="contact-left">
+    <p class="label">Vamos trabalhar juntos</p>
+    <h2>Tem um projeto<br>em mente?</h2>
+  </div>
+  <a href="mailto:marcosdovalef@gmail.com" class="contact-link">marcosdovalef@gmail.com</a>
+</div>
+
+<footer>
+  <p>© 2025 Marcos do Vale</p>
+  <div class="footer-dot"></div>
+  <p>Design de Interiores & Marcenaria</p>
+</footer>
+
+</body>
+</html>
