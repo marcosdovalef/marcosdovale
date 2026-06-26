@@ -1,190 +1,308 @@
-sala<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marcos do Vale — Projetos</title>
+<title>Marcos do Vale — Arquitetura & Design</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --wine: #600818;
-    --wine-dark: #3d0510;
-    --wine-light: #8a0f22;
-    --cream: #d6d7ce;
-    --cream-dark: #bbbdb4;
-    --cream-light: #e8e9e2;
-    --ink: #1a1108;
-    --muted: #7a7870;
+    --bg:      rgb(96, 8, 24);
+    --bg-dark: rgb(60, 5, 15);
+    --bg-darker: rgb(35, 3, 9);
+    --bg-light: rgb(115, 10, 28);
+    --w:       #ffffff;
+    --w60:     rgba(255,255,255,0.6);
+    --w30:     rgba(255,255,255,0.3);
+    --w15:     rgba(255,255,255,0.15);
+    --w08:     rgba(255,255,255,0.08);
+    --w04:     rgba(255,255,255,0.04);
   }
 
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: var(--cream);
-    color: var(--ink);
+    background: var(--bg);
+    color: var(--w);
     min-height: 100vh;
   }
 
+  /* ── NAV ── */
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 3rem;
-    border-bottom: 1px solid var(--cream-dark);
-    background: var(--cream);
+    padding: 1.75rem 3rem;
+    border-bottom: 1px solid var(--w15);
+    background: var(--bg);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 20;
   }
 
-  .logo {
-    font-size: 13px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--wine);
-    line-height: 1.3;
+  .nav-links, .nav-right {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
   }
-  .logo span { display: block; font-weight: 700; font-size: 15px; color: var(--ink); letter-spacing: 0.04em; }
 
-  nav ul { list-style: none; display: flex; gap: 2.5rem; }
-  nav ul a {
+  .nav-links a, .nav-right a {
     text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 0.15em;
+    font-size: 10px;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--muted);
-    transition: color 0.2s;
+    color: var(--w60);
+    font-weight: 400;
+    transition: color 0.25s;
   }
-  nav ul a:hover { color: var(--wine); }
 
+  .nav-links a:hover, .nav-right a:hover { color: var(--w); }
+
+  /* ── HERO ── */
   .hero {
-    background: var(--wine);
-    padding: 6rem 3rem 5rem;
+    min-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 3rem 5rem;
     position: relative;
     overflow: hidden;
+    background: var(--bg);
   }
 
   .hero::before {
     content: '';
     position: absolute;
-    top: -60px; right: -60px;
-    width: 320px; height: 320px;
-    border: 1px solid rgba(214,215,206,0.15);
-    border-radius: 50%;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--w04) 1px, transparent 1px),
+      linear-gradient(90deg, var(--w04) 1px, transparent 1px);
+    background-size: 60px 60px;
   }
+
   .hero::after {
     content: '';
     position: absolute;
-    bottom: -40px; left: 40px;
-    width: 180px; height: 180px;
-    border: 1px solid rgba(214,215,206,0.1);
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--w15) 30%, var(--w15) 70%, transparent);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--w30);
+    margin-bottom: 2.5rem;
+  }
+
+  .logo-wrap {
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .logo-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -16px;
+    border: 1px solid var(--w15);
     border-radius: 50%;
   }
 
-  .hero-label {
+  .logo-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -32px;
+    border: 1px solid var(--w08);
+    border-radius: 50%;
+  }
+
+  .logo-img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+
+  .hero-name {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--w);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-title {
     font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--w60);
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--w30), transparent);
+    margin: 0 auto 2.5rem;
+  }
+
+  .hero-sub {
+    font-size: 12px;
+    color: var(--w60);
+    letter-spacing: 0.06em;
+    line-height: 1.85;
+    max-width: 400px;
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 0.9rem 2.5rem;
+    background: var(--w);
+    color: var(--bg);
+    text-decoration: none;
+    font-size: 10px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: rgba(214,215,206,0.55);
-    margin-bottom: 1.5rem;
+    font-weight: 700;
+    transition: opacity 0.25s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-ghost {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    border: 1px solid var(--w30);
+    color: var(--w60);
+    text-decoration: none;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: border-color 0.25s, color 0.25s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--w60);
+    color: var(--w);
+  }
+
+  /* ── STRIP ── */
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--w15);
+    border-bottom: 1px solid var(--w15);
+  }
+
+  .strip-item {
+    padding: 2.5rem 3rem;
+    text-align: center;
+    border-right: 1px solid var(--w15);
+  }
+
+  .strip-item:last-child { border-right: none; }
+
+  .strip-num {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--w);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .strip-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--w30);
+    font-weight: 300;
+  }
+
+  /* ── SEÇÃO PROJETOS ── */
+  .sec-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem 3rem 2.5rem;
+    border-bottom: 1px solid var(--w15);
+  }
+
+  .sec-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--w60);
     display: flex;
     align-items: center;
     gap: 12px;
   }
-  .hero-label::before {
-    content: '';
-    display: inline-block;
-    width: 32px;
-    height: 1px;
-    background: rgba(214,215,206,0.4);
-  }
 
-  .hero h1 {
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
-    font-weight: 700;
-    line-height: 0.92;
-    letter-spacing: -0.03em;
-    color: var(--cream);
-    max-width: 700px;
-    margin-bottom: 2rem;
-  }
-
-  .hero h1 em {
-    font-style: italic;
-    font-weight: 300;
-    color: rgba(214,215,206,0.6);
-  }
-
-  .hero-sub {
-    font-size: 14px;
-    color: rgba(214,215,206,0.6);
-    letter-spacing: 0.04em;
-    max-width: 400px;
-    line-height: 1.7;
-  }
-
-  .hero-year {
-    position: absolute;
-    bottom: 2rem;
-    right: 3rem;
-    font-size: 80px;
-    font-weight: 700;
-    letter-spacing: -0.05em;
-    color: rgba(214,215,206,0.07);
-    line-height: 1;
-    user-select: none;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 3rem 3rem 2rem;
-    border-bottom: 1px solid var(--cream-dark);
-  }
-
-  .section-title {
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .section-title::before {
+  .sec-label::before {
     content: '';
     width: 24px; height: 1px;
-    background: var(--wine);
-    display: inline-block;
+    background: var(--w30);
   }
 
-  .section-count {
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--muted);
+  .sec-link {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--w30);
+    text-decoration: none;
+    transition: color 0.25s;
   }
 
+  .sec-link:hover { color: var(--w); }
+
+  /* ── GRID DE PROJETOS ── */
   .projects {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    background: var(--cream-dark);
+    gap: 1px;
+    background: var(--w15);
   }
 
   .project-card {
-    background: var(--cream);
+    background: var(--bg);
     cursor: pointer;
-    position: relative;
     overflow: hidden;
-    transition: background 0.3s;
   }
-  .project-card:hover { background: var(--cream-light); }
 
   .project-image {
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 3/2;
     overflow: hidden;
     position: relative;
   }
@@ -194,179 +312,265 @@ sala<!DOCTYPE html>
     height: 100%;
     object-fit: cover;
     display: block;
-    filter: saturate(0.85) contrast(1.05);
-    transition: transform 0.6s ease, filter 0.4s ease;
-  }
-  .project-card:hover .project-dormitorio V2 {
-    transform: scale(1.03);
-    filter: saturate(1) contrast(1.05);
+    filter: saturate(0.4) brightness(0.72);
+    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s;
   }
 
-  .project-overlay {
+  .project-card:hover .project-image img {
+    transform: scale(1.05);
+    filter: saturate(0.6) brightness(0.88);
+  }
+
+  .proj-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(26,17,8,0.6) 0%, transparent 55%);
-    opacity: 0;
-    transition: opacity 0.4s;
+    background: linear-gradient(to top, rgba(60,5,15,0.8) 0%, transparent 60%);
+    opacity: 0.55;
+    transition: opacity 0.5s;
   }
-  .project-card:hover .project-overlay { opacity: 1; }
 
-  .overlay-tag {
+  .project-card:hover .proj-overlay { opacity: 0.85; }
+
+  .proj-idx {
     position: absolute;
-    bottom: 1rem;
-    left: 1.25rem;
-    font-size: 11px;
-    letter-spacing: 0.15em;
+    top: 1rem; right: 1.25rem;
+    font-size: 48px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.05);
+    line-height: 1;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+
+  .proj-tag {
+    position: absolute;
+    bottom: 1rem; left: 1.5rem;
+    font-size: 9px;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--cream);
+    color: var(--w60);
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
     transition: opacity 0.4s, transform 0.4s;
   }
-  .project-card:hover .overlay-tag {
+
+  .project-card:hover .proj-tag {
     opacity: 1;
     transform: translateY(0);
   }
 
   .project-info {
-    padding: 1.5rem 1.5rem 2rem;
-    border-top: 1px solid var(--cream-dark);
+    padding: 1.75rem 1.5rem 2rem;
+    border-top: 1px solid var(--w15);
   }
 
-  .project-number {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--wine);
+  .project-num {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--w30);
     margin-bottom: 0.5rem;
+    text-transform: uppercase;
   }
 
   .project-name {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: var(--ink);
-    margin-bottom: 0.75rem;
-    line-height: 1.15;
+    color: var(--w);
+    margin-bottom: 0.65rem;
+    line-height: 1.1;
   }
 
   .project-desc {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.65;
+    font-size: 11px;
+    color: var(--w60);
+    line-height: 1.75;
+    font-weight: 300;
   }
 
   .project-meta {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.75rem;
     margin-top: 1.25rem;
     padding-top: 1.25rem;
-    border-top: 1px solid var(--cream-dark);
+    border-top: 1px solid var(--w15);
   }
 
-  .meta-item { font-size: 11px; }
-  .meta-label { color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 2px; }
-  .meta-value { color: var(--ink); font-weight: 500; }
+  .meta-label {
+    color: var(--w30);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 3px;
+    font-size: 9px;
+  }
 
+  .meta-value {
+    color: var(--w);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── CONTATO ── */
   .contact {
-    background: var(--wine);
-    padding: 4rem 3rem;
+    background: var(--bg-dark);
+    padding: 5rem 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 2.5rem;
+    border-top: 1px solid var(--w15);
   }
 
-  .contact-left .label {
-    font-size: 11px;
-    letter-spacing: 0.22em;
+  .contact-left .clabel {
+    font-size: 9px;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: rgba(214,215,206,0.45);
-    margin-bottom: 0.75rem;
+    color: var(--w30);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .contact-left .clabel::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--w30);
   }
 
   .contact-left h2 {
-    font-size: 2.2rem;
+    font-size: 2.8rem;
     font-weight: 700;
     letter-spacing: -0.03em;
-    color: var(--cream);
-    line-height: 1.1;
+    color: var(--w);
+    line-height: 1.0;
+  }
+
+  .contact-left h2 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--w60);
   }
 
   .contact-link {
     display: inline-block;
-    padding: 1rem 2.5rem;
-    border: 1px solid rgba(214,215,206,0.4);
-    color: var(--cream);
+    padding: 1.1rem 2.5rem;
+    border: 1px solid var(--w30);
+    color: var(--w);
     text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 0.18em;
+    font-size: 10px;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    transition: background 0.25s, border-color 0.25s;
-    flex-shrink: 0;
-  }
-  .contact-link:hover {
-    background: rgba(214,215,206,0.12);
-    border-color: rgba(214,215,206,0.7);
+    transition: background 0.3s, border-color 0.3s;
   }
 
+  .contact-link:hover {
+    background: var(--w08);
+    border-color: var(--w60);
+  }
+
+  /* ── FOOTER ── */
   footer {
-    background: var(--wine-dark);
+    background: var(--bg-darker);
     padding: 1.5rem 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-top: 1px solid var(--w08);
   }
 
   footer p {
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: rgba(214,215,206,0.35);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--w30);
     text-transform: uppercase;
   }
 
-  .footer-dot {
-    width: 6px; height: 6px;
-    background: var(--wine);
-    border-radius: 50%;
+  .footer-logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.3;
   }
 
+  /* ── RESPONSIVO ── */
   @media (max-width: 680px) {
     nav { padding: 1.25rem 1.5rem; }
-    nav ul { gap: 1.5rem; }
-    .hero { padding: 4rem 1.5rem 4rem; }
-    .section-header { padding: 2rem 1.5rem 1.5rem; }
+    .nav-links, .nav-right { gap: 1.25rem; }
+    .hero { padding: 3rem 1.5rem 4rem; }
+    .logo-wrap { width: 140px; height: 140px; }
+    .logo-img { width: 110px; height: 110px; }
+    .strip { grid-template-columns: 1fr; }
+    .strip-item { border-right: none; border-bottom: 1px solid var(--w15); }
+    .strip-item:last-child { border-bottom: none; }
+    .sec-header { padding: 2rem 1.5rem 1.5rem; }
     .projects { grid-template-columns: 1fr; }
     .project-info { padding: 1.25rem; }
-    .contact { padding: 3rem 1.5rem; }
+    .contact { padding: 3rem 1.5rem; flex-direction: column; }
     footer { padding: 1.25rem 1.5rem; }
   }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <div class="logo">
-    Arquitetura & Design
-    <span>Marcos do Vale</span>
-  </div>
-  <ul>
-    <li><a href="#">Projetos</a></li>
-    <li><a href="#">Sobre</a></li>
-    <li><a href="#">Contato</a></li>
+  <ul class="nav-links">
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+  </ul>
+  <ul class="nav-right">
+    <li><a href="#contato">Contato</a></li>
   </ul>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-label">Portfólio</div>
-  <h1>Espaços que <em>contam</em> histórias</h1>
-  <p class="hero-sub">Design de interiores e marcenaria contemporânea. Projetos planejados com intenção, funcionalidade e beleza duradoura.</p>
-  <div class="hero-year">2025</div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Arquitetura & Design de Interiores</div>
+
+    <div class="logo-wrap">
+      <img class="logo-img" src="imagens/logo.png" alt="Marcos do Vale">
+    </div>
+
+    <h1 class="hero-name">Marcos do Vale</h1>
+    <p class="hero-title">Arquitetura & Design de Interiores</p>
+
+    <div class="hero-divider"></div>
+
+    <p class="hero-sub">Espaços planejados com intenção, funcionalidade e beleza duradoura. Design contemporâneo que conta histórias.</p>
+
+    <div class="hero-cta">
+      <a href="#projetos" class="btn-primary">Ver Projetos</a>
+      <a href="#contato" class="btn-ghost">Entrar em contato</a>
+    </div>
+  </div>
 </section>
 
-<div class="section-header">
-  <span class="section-title">Projetos selecionados</span>
-  <span class="section-count">02 trabalhos</span>
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item">
+    <div class="strip-num">02+</div>
+    <div class="strip-label">Projetos concluídos</div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-num">7°</div>
+    <div class="strip-label">Semestre em Arquitetura</div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-num">1+</div>
+    <div class="strip-label">Anos de experiência</div>
+  </div>
+</div>
+
+<!-- PROJETOS -->
+<div id="projetos" class="sec-header">
+  <span class="sec-label">Projetos selecionados</span>
+  <a href="#" class="sec-link">Ver todos →</a>
 </div>
 
 <div class="projects">
@@ -377,11 +581,12 @@ sala<!DOCTYPE html>
         src="https://lh3.googleusercontent.com/sitesv/AA5AbUDA4YenTQG2g_7L5tPyVefqnTlx8EMUe6lkoZk7N_jxD-l1VC_P2HEd0c423IzuRBAe6znTi-oEjBUxDdbw3V3O00k8C21uA_En1yvMu5Xln39fVMyNeH6Cla7sF9hSMc-wFHMFGVYvm3OKCJDLIKB7LSsjZJStZhtQwSrqg_D8bEW93OFPIS92CJ-3q08_eQrCGbkEtuJj_V0JmN2lmBHXUzFCdFn4rwmBnTI=w1280"
         alt="Apartamento Parque Brás"
       >
-      <div class="project-overlay"></div>
-      <div class="overlay-tag">Studio — 27 m²</div>
+      <div class="proj-overlay"></div>
+      <div class="proj-idx">01</div>
+      <div class="proj-tag">Studio — 27 m²</div>
     </div>
     <div class="project-info">
-      <div class="project-number">Projeto 01</div>
+      <div class="project-num">Projeto 01</div>
       <h3 class="project-name">Apartamento<br>Parque Brás</h3>
       <p class="project-desc">Studio de 27 m² planejado para locações de longa temporada. Soluções minimalistas que maximizam o armazenamento sem abrir mão da circulação e da sensação de amplitude.</p>
       <div class="project-meta">
@@ -407,11 +612,12 @@ sala<!DOCTYPE html>
         src="imagens/sala-daniela.jpg"
         alt="Sala de Estar Hortênsias"
       >
-      <div class="project-overlay"></div>
-      <div class="overlay-tag">Marcenaria contemporânea</div>
+      <div class="proj-overlay"></div>
+      <div class="proj-idx">02</div>
+      <div class="proj-tag">Marcenaria contemporânea</div>
     </div>
     <div class="project-info">
-      <div class="project-number">Projeto 02</div>
+      <div class="project-num">Projeto 02</div>
       <h3 class="project-name">Sala de Estar<br>Hortênsias</h3>
       <p class="project-desc">Projeto de marcenaria com proposta contemporânea e sofisticada. Design pensado para maximizar o armazenamento de forma inteligente, unindo funcionalidade e um toque de aconchego.</p>
       <div class="project-meta">
@@ -433,17 +639,19 @@ sala<!DOCTYPE html>
 
 </div>
 
-<div class="contact">
+<!-- CONTATO -->
+<div id="contato" class="contact">
   <div class="contact-left">
-    <p class="label">Vamos trabalhar juntos</p>
-    <h2>Tem um projeto<br>em mente?</h2>
+    <p class="clabel">Vamos trabalhar juntos</p>
+    <h2>Tem um projeto<br><em>em mente?</em></h2>
   </div>
   <a href="mailto:marcosdovalef@gmail.com" class="contact-link">marcosdovalef@gmail.com</a>
 </div>
 
+<!-- FOOTER -->
 <footer>
   <p>© 2025 Marcos do Vale</p>
-  <div class="footer-dot"></div>
+  <img class="footer-logo" src="imagens/logo.png" alt="MV">
   <p>Design de Interiores & Marcenaria</p>
 </footer>
 
