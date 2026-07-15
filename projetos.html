@@ -44,20 +44,11 @@
   }
 
   .nav-brand { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; }
-  .nav-brand img { width: 30px; height: 30px; object-fit: contain; border-radius: 50%; }
-  .nav-brand span { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--greige); font-weight: 700; }
+  .nav-brand span { font-size: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--greige); font-weight: 800; }
 
   .nav-links, .nav-right { list-style: none; display: flex; gap: 2.5rem; }
 
-  .nav-links a, .nav-right a {
-    text-decoration: none;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--g60);
-    font-weight: 500;
-    transition: color 0.25s;
-  }
+  .nav-links a, .nav-right a { text-decoration: none; font-size: 15px; letter-spacing: 0; text-transform: none; color: var(--greige); font-weight: 400; transition: opacity 0.25s; }
 
   .nav-links a.active { color: var(--greige); }
   .nav-links a:hover, .nav-right a:hover { color: var(--greige); }
@@ -280,15 +271,14 @@
 <!-- NAV -->
 <nav>
   <a class="nav-brand" href="index.html">
-    <img src="imagens/logo.png" alt="Marcos do Vale">
-    <span>Marcos do Vale</span>
+    <span>Marcos do Vale Projetos</span>
   </a>
   <ul class="nav-links">
-    <li><a href="projetos.html" class="active">Projetos</a></li>
-    <li><a href="sobre.html">Sobre</a></li>
+    <li><a href="projetos.html" class="active">projetos</a></li>
+    <li><a href="sobre.html">sobre</a></li>
   </ul>
   <ul class="nav-right">
-    <li><a href="mailto:marcosdovalef@gmail.com">Contato</a></li>
+    <li><a href="mailto:marcosdovalef@gmail.com">contatos</a></li>
   </ul>
 </nav>
 
@@ -312,7 +302,7 @@
 
   <a class="proj-row" href="#" data-img="imagens/sala-daniela.jpg" target="_blank" rel="noopener">
     <span class="proj-index">02</span>
-    <img class="proj-thumb" src="imagens/sala-daniela.jpg" alt="">
+    <img class="proj-thumb" src="imagens/sala-estar-hortensias.jpg" alt="Sala de Estar Hortênsias">
     <span class="proj-title">Sala de Estar Hortênsias</span>
     <span class="proj-meta">Marcenaria<br>Contemporâneo<br>Sala de estar</span>
     <span class="proj-arrow">↗</span>

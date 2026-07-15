@@ -46,30 +46,23 @@
 
   .nav-brand { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; }
 
-  .nav-brand img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-    border-radius: 50%;
-  }
-
   .nav-brand span {
-    font-size: 10px;
-    letter-spacing: 0.25em;
+    font-size: 15px;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: var(--ink);
-    font-weight: 700;
+    color: var(--maroon);
+    font-weight: 800;
   }
 
   .nav-links, .nav-right { list-style: none; display: flex; gap: 2.5rem; }
 
   .nav-links a, .nav-right a {
     text-decoration: none;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--ink70);
-    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--maroon);
+    font-weight: 400;
     transition: color 0.25s;
   }
 
@@ -86,16 +79,6 @@
     background: var(--bg);
   }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--ink08) 1px, transparent 1px),
-      linear-gradient(90deg, var(--ink08) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
   .hero-block {
     position: relative;
     z-index: 2;
@@ -109,25 +92,16 @@
     width: 220px;
     height: 220px;
     margin-bottom: 1.75rem;
-    border-radius: 50%;
-    overflow: hidden;
+    margin-left: auto;
     position: relative;
-  }
-
-  .logo-wrap::before {
-    content: '';
-    position: absolute;
-    inset: -20px;
-    border: 1px solid var(--ink15);
-    border-radius: 50%;
   }
 
   .logo-img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
   .hero-word {
-    font-weight: 800;
-    font-size: clamp(2.6rem, 5.5vw, 4.6rem);
-    letter-spacing: -0.02em;
+    font-weight: 500;
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--maroon);
     line-height: 0.95;
@@ -136,10 +110,10 @@
 
   .hero-sub {
     font-size: 13px;
-    color: var(--ink70);
+    color: var(--maroon);
     letter-spacing: 0.02em;
-    line-height: 1.9;
-    max-width: 360px;
+    line-height: 1.7;
+    max-width: 340px;
     font-weight: 400;
     margin-bottom: 2.5rem;
   }
@@ -152,10 +126,10 @@
     background: var(--maroon);
     color: var(--greige);
     text-decoration: none;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 400;
     transition: background 0.25s;
   }
 
@@ -214,15 +188,14 @@
 <!-- NAV -->
 <nav>
   <a class="nav-brand" href="index.html">
-    <img src="imagens/logo.png" alt="Marcos do Vale">
-    <span>Marcos do Vale</span>
+    <span>Marcos do Vale Projetos</span>
   </a>
   <ul class="nav-links">
-    <li><a href="projetos.html">Projetos</a></li>
-    <li><a href="sobre.html">Sobre</a></li>
+    <li><a href="projetos.html">projetos</a></li>
+    <li><a href="sobre.html">sobre</a></li>
   </ul>
   <ul class="nav-right">
-    <li><a href="mailto:marcosdovalef@gmail.com">Contato</a></li>
+    <li><a href="mailto:marcosdovalef@gmail.com">contatos</a></li>
   </ul>
 </nav>
 
@@ -234,7 +207,7 @@
     </div>
     <h1 class="hero-word">Interiores</h1>
     <p class="hero-sub">Espaços planejados com intenção, funcionalidade e beleza duradoura. Design contemporâneo que conta histórias.</p>
-    <a href="projetos.html" class="btn-primary">Ver Projetos →</a>
+    <a href="projetos.html" class="btn-primary">ver projetos -&gt;</a>
   </div>
 </section>
 
