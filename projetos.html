@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -73,7 +75,7 @@
   .page-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--greige); }
 
   .page-title {
-    font-weight: 800;
+    font-weight: 500;
     font-size: clamp(2.6rem, 8vw, 5.4rem);
     letter-spacing: -0.02em;
     text-transform: uppercase;
@@ -100,6 +102,14 @@
     text-decoration: none;
     color: var(--greige);
     transition: padding-left 0.4s ease, color 0.3s ease;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
   }
 
   .proj-row:hover { padding-left: 1rem; color: var(--greige); }
@@ -124,7 +134,7 @@
   }
 
   .proj-title {
-    font-weight: 700;
+    font-weight: 500;
     font-size: clamp(1.4rem, 3.2vw, 2.2rem);
     letter-spacing: -0.01em;
     flex: 1;
@@ -210,7 +220,7 @@
   .contact-left .clabel::before { content: ''; width: 24px; height: 1px; background: var(--g60); }
 
   .contact-left h2 {
-    font-weight: 800;
+    font-weight: 500;
     font-size: 2.6rem;
     letter-spacing: -0.01em;
     color: var(--greige);
@@ -246,6 +256,120 @@
   footer p { font-size: 9px; letter-spacing: 0.2em; color: var(--g40); text-transform: uppercase; }
   .footer-logo { width: 28px; height: 28px; object-fit: contain; border-radius: 50%; opacity: 0.9; }
 
+  /* ── MODAL / LIGHTBOX ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 4, 6, 0.92);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .modal-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--greige);
+  }
+
+  .modal-title {
+    font-weight: 500;
+    font-size: 1.3rem;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .modal-count {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--g60);
+    white-space: nowrap;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: -2.75rem;
+    right: 0;
+    background: none;
+    border: 1px solid var(--g40);
+    color: var(--greige);
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s, border-color 0.25s;
+  }
+
+  .modal-close:hover { background: var(--g10); border-color: var(--g60); }
+
+  .modal-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--bg-deep);
+    border: 1px solid var(--g20);
+    overflow: hidden;
+  }
+
+  .modal-stage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(53, 10, 15, 0.75);
+    border: 1px solid var(--g20);
+    color: var(--greige);
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s;
+  }
+
+  .modal-nav:hover { background: rgba(53, 10, 15, 0.95); }
+  .modal-prev { left: 0.75rem; }
+  .modal-next { right: 0.75rem; }
+
+  .modal-thumbs {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .modal-thumbs img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.5;
+    border: 1px solid transparent;
+    transition: opacity 0.25s, border-color 0.25s;
+  }
+
+  .modal-thumbs img:hover { opacity: 0.85; }
+  .modal-thumbs img.active { opacity: 1; border-color: var(--greige); }
+
   /* ── RESPONSIVO ── */
   @media (max-width: 780px) {
     .proj-preview { display: none; }
@@ -263,6 +387,9 @@
     .list-note { padding: 2rem 1.5rem 3rem; }
     .contact { padding: 3rem 1.5rem; flex-direction: column; }
     footer { padding: 1.25rem 1.5rem; flex-wrap: wrap; gap: 0.75rem; }
+    .modal-overlay { padding: 1rem; }
+    .modal-close { top: -2.5rem; width: 34px; height: 34px; }
+    .modal-nav { width: 36px; height: 36px; }
   }
 </style>
 </head>
@@ -286,37 +413,54 @@
 <div class="page-head">
   <p class="page-eyebrow">Trabalhos selecionados</p>
   <h1 class="page-title">projetos </h1>
-  <p class="page-count">02 projetos — interiores & marcenaria</p>
+  <p class="page-count">02 projetos — interiores &amp; marcenaria</p>
 </div>
 
 <!-- LISTA -->
 <div class="proj-list" id="projList">
 
-  <a class="proj-row" href="#" data-img="https://lh3.googleusercontent.com/sitesv/AA5AbUDA4YenTQG2g_7L5tPyVefqnTlx8EMUe6lkoZk7N_jxD-l1VC_P2HEd0c423IzuRBAe6znTi-oEjBUxDdbw3V3O00k8C21uA_En1yvMu5Xln39fVMyNeH6Cla7sF9hSMc-wFHMFGVYvm3OKCJDLIKB7LSsjZJStZhtQwSrqg_D8bEW93OFPIS92CJ-3q08_eQrCGbkEtuJj_V0JmN2lmBHXUzFCdFn4rwmBnTI=w1280" target="_blank" rel="noopener">
+  <button type="button" class="proj-row" data-title="Apartamento Parque Brás" data-images="imagens/parquebras.png,imagens/parquebras2.png,imagens/parquebras3.png">
     <span class="proj-index">01</span>
-    <img class="proj-thumb" src="https://lh3.googleusercontent.com/sitesv/AA5AbUDA4YenTQG2g_7L5tPyVefqnTlx8EMUe6lkoZk7N_jxD-l1VC_P2HEd0c423IzuRBAe6znTi-oEjBUxDdbw3V3O00k8C21uA_En1yvMu5Xln39fVMyNeH6Cla7sF9hSMc-wFHMFGVYvm3OKCJDLIKB7LSsjZJStZhtQwSrqg_D8bEW93OFPIS92CJ-3q08_eQrCGbkEtuJj_V0JmN2lmBHXUzFCdFn4rwmBnTI=w1280" alt="">
+    <img class="proj-thumb" src="imagens/parquebras.png" alt="Apartamento Parque Brás">
     <span class="proj-title">Apartamento Parque Brás</span>
     <span class="proj-meta">São Paulo, SP<br>Studio — 27 m²<br>Locação</span>
     <span class="proj-arrow">↗</span>
-  </a>
+  </button>
 
-  <a class="proj-row" href="#" data-img="imagens/daniela-rack.png" target="_blank" rel="noopener">
+  <button type="button" class="proj-row" data-title="Sala de Estar Hortênsias" data-images="imagens/salahortensias.png,imagens/salahortensias2.png">
     <span class="proj-index">02</span>
-    <img class="proj-thumb" src="imagens/sala-estar-hortensias.jpg" alt="Sala de Estar Hortênsias">
+    <img class="proj-thumb" src="imagens/salahortensias.png" alt="Sala de Estar Hortênsias">
     <span class="proj-title">Sala de Estar Hortênsias</span>
     <span class="proj-meta">Marcenaria<br>Contemporâneo<br>Sala de estar</span>
     <span class="proj-arrow">↗</span>
-  </a>
+  </button>
 
 </div>
 
 <div class="list-note">
-  <p>Novos projetos são adicionados conforme são concluídos. Entre em contato para conhecer trabalhos em andamento ou solicitar um orçamento.</p>
+  <p>Novos projetos são adicionados conforme são concluídos. Clique em um projeto para ver as fotos. Entre em contato para conhecer trabalhos em andamento ou solicitar um orçamento.</p>
 </div>
 
 <!-- Floating preview (desktop) -->
 <div class="proj-preview" id="projPreview">
   <img id="projPreviewImg" src="" alt="">
+</div>
+
+<!-- MODAL / GALERIA -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="modalClose" aria-label="Fechar">✕</button>
+    <div class="modal-head">
+      <span class="modal-title" id="modalTitle"></span>
+      <span class="modal-count" id="modalCount"></span>
+    </div>
+    <div class="modal-stage">
+      <button type="button" class="modal-nav modal-prev" id="modalPrev" aria-label="Anterior">‹</button>
+      <img id="modalImg" src="" alt="">
+      <button type="button" class="modal-nav modal-next" id="modalNext" aria-label="Próxima">›</button>
+    </div>
+    <div class="modal-thumbs" id="modalThumbs"></div>
+  </div>
 </div>
 
 <!-- CONTATO -->
@@ -332,7 +476,7 @@
 <footer>
   <p>© 2025 Marcos do Vale</p>
   <img class="footer-logo" src="imagens/logo.png" alt="MV">
-  <p>Design de Interiores & Marcenaria</p>
+  <p>Design de Interiores &amp; Marcenaria</p>
 </footer>
 
 <script>
@@ -357,7 +501,8 @@
 
     rows.forEach((row) => {
       row.addEventListener('mouseenter', () => {
-        previewImg.src = row.dataset.img;
+        const firstImg = row.dataset.images.split(',')[0];
+        previewImg.src = firstImg;
         preview.classList.add('active');
       });
       row.addEventListener('mouseleave', () => {
@@ -365,6 +510,78 @@
       });
     });
   }
+
+  /* ── GALERIA / MODAL ── */
+  const overlay = document.getElementById('modalOverlay');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalCount = document.getElementById('modalCount');
+  const modalImg = document.getElementById('modalImg');
+  const modalThumbs = document.getElementById('modalThumbs');
+  const modalPrev = document.getElementById('modalPrev');
+  const modalNext = document.getElementById('modalNext');
+  const modalClose = document.getElementById('modalClose');
+
+  let currentImages = [];
+  let currentIndex = 0;
+
+  function renderModal() {
+    modalImg.src = currentImages[currentIndex];
+    modalCount.textContent = (currentIndex + 1) + ' / ' + currentImages.length;
+    [...modalThumbs.children].forEach((t, i) => {
+      t.classList.toggle('active', i === currentIndex);
+    });
+  }
+
+  function openModal(row) {
+    currentImages = row.dataset.images.split(',').map(s => s.trim()).filter(Boolean);
+    currentIndex = 0;
+    modalTitle.textContent = row.dataset.title;
+
+    modalThumbs.innerHTML = '';
+    currentImages.forEach((src, i) => {
+      const t = document.createElement('img');
+      t.src = src;
+      t.alt = '';
+      t.addEventListener('click', () => { currentIndex = i; renderModal(); });
+      modalThumbs.appendChild(t);
+    });
+
+    renderModal();
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    preview.classList.remove('active');
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  rows.forEach((row) => {
+    row.addEventListener('click', () => openModal(row));
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+
+  modalPrev.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    renderModal();
+  });
+
+  modalNext.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    renderModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') modalPrev.click();
+    if (e.key === 'ArrowRight') modalNext.click();
+  });
 </script>
 
 </body>
